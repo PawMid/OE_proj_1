@@ -23,16 +23,13 @@ class Function(ABC):
         yaxis = np.arange(y_min, y_max, step)
         np.append(yaxis, y_max)
         x, y = np.meshgrid(xaxis, yaxis)
-
         results = []
         for xv in xaxis:
             for yv in yaxis:
                 results.append(self.calculate(xv, yv))
 
-        print(results[len(results)-1])
-
         results = np.reshape(results, x.shape)
-        
+               
         figure = plt.figure()
         axis = figure.gca( projection='3d')
         axis.plot_surface(x, y, results,alpha=0.7, cmap='jet', shade= "false")
