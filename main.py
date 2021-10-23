@@ -1,3 +1,4 @@
+
 from population import Popultaion
 
 binary = True
@@ -15,3 +16,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
