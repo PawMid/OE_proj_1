@@ -3,7 +3,7 @@ from abc import ABC
 
 import numpy as np
 import matplotlib.pyplot as plt
-from numpy.core.fromnumeric import sort
+from typing import List
 
 
 class Function(ABC):
@@ -17,11 +17,11 @@ class Function(ABC):
     def calculate(self, *args) -> float:
         pass
 
-    def plot(self, x_min: float, x_max: float, y_min: float, y_max: float, step: float = 0.5, get_axis: bool = False):
-        xaxis = np.arange(x_min, x_max, step)
-        np.append(xaxis, x_max)
-        yaxis = np.arange(y_min, y_max, step)
-        np.append(yaxis, y_max)
+    def plot(self, x_space: List[float], y_space: List[float], step: float = 0.5, get_axis: bool = False):
+        xaxis = np.arange(x_space[0], x_space[1], step)
+        np.append(xaxis, x_space[1])
+        yaxis = np.arange(y_space[0], y_space[1], step)
+        np.append(yaxis, y_space[1])
         x, y = np.meshgrid(xaxis, yaxis)
         results = []
         for xv in xaxis:
