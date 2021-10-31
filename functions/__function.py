@@ -3,19 +3,21 @@ from abc import ABC
 
 import numpy as np
 import matplotlib.pyplot as plt
-from numpy.core.fromnumeric import sort
+from typing import List
 
 
 class Function(ABC):
 
-    dims: int
-
-    def __init__(self, dims: int) -> None:
+    def __init__(self, dims: int, space: List) -> None:
         super().__init__()
         self.dims = dims
+        self._space = space
 
     def calculate(self, *args) -> float:
         pass
+
+    def get_space(self):
+        return self._space
 
     def plot(self, x_min: float, x_max: float, y_min: float, y_max: float, step: float = 0.5, get_axis: bool = False):
         xaxis = np.arange(x_min, x_max, step)
