@@ -12,6 +12,6 @@ class OnePointCrossover(CrossoverStrategy):
     def cross(ch1: BinCromosome, ch2: BinCromosome):
         crossoverPoint = randrange(0, ch1.length, 1)
         for i in range(crossoverPoint, ch1.length):
-            tmp = ch1.value[1]
+            tmp = ch1.value[i]
             ch1.value[i] = ch2.value[i]
             ch2.value[i] = tmp

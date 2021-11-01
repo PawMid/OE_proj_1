@@ -1,16 +1,17 @@
-from population import Popultaion
+from genetic import Genetic
+from functions import Ackley, Branin
+from selection import BestStrategy, TournamentStrategy
+from mutation import OnePointStrategy, ThreePointStrategy
+from crossover import UniformCrossover, TwoPointCrossover, OnePointCrossover, ThreePointCrossover
 
 binary = True
 
 
 def main():
-    popultaion_X: Popultaion = Popultaion([20., 41.5], 30)
-    population_Y: Popultaion = Popultaion([11.3, 40.2], 30)
+    gen = Genetic(Branin, TournamentStrategy, UniformCrossover, ThreePointStrategy, population_size=1000, chromosome_size=50)
+    gen.algorithm(1000, percentage=0.5, k=100)
 
-    population_Y.init_individuals(binary, size=10)
-    popultaion_X.init_individuals(binary, size=10)
-
-    popultaion_X.print_population(real=True)
+    gen.plot_solution()
 
 
 if __name__ == '__main__':

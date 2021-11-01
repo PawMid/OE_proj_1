@@ -13,6 +13,6 @@ class UniformCrossover(CrossoverStrategy):
         for i in range(ch1.length):
             swap = bool(getrandbits(1))
             if swap:
-                tmp = ch1.value[1]
+                tmp = ch1.value[i]
                 ch1.value[i] = ch2.value[i]
                 ch2.value[i] = tmp

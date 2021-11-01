@@ -16,4 +16,4 @@ class ThreePointStrategy(MutationStrategy):
             while mutation_point in points:
                 mutation_point = randrange(0, chromosome.length, 1)
             points.append(mutation_point)
-            chromosome[mutation_point] = not chromosome[mutation_point]
+            chromosome.value[mutation_point] = not chromosome.value[mutation_point]

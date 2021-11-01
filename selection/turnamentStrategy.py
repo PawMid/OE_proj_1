@@ -10,19 +10,20 @@ class TournamentStrategy(SelectionStrategy):
         if not kwargs.get('k') and not kwargs.get('population_len'):
             raise ValueError('Missing required param k or population_len')
         k = kwargs.get('k')
-        population_len = kwargs.get('population_len')
+        population_len = kwargs.get('population_len') - 1
         n = int(population_len / k)
         selected = []
-        groups = TournamentStrategy.__make_groups(n, k, population_len)
+        groups = TournamentStrategy.__make_groups(n, k, population_len, kwargs.get('elite_index') )
         for group in groups:
             index = randrange(0, len(group), 1)
             selected.append(group[index])
         return selected
 
     @staticmethod
-    def __make_groups(group_count: int, group_amount: int, population_len: int) -> List[List]:
+    def __make_groups(group_count: int, group_amount: int, population_len: int, elite_index: int) -> List[List]:
         groups = []
         selected = [False] * population_len
+        selected[elite_index] = True
         while len(groups) < group_amount:
             group = []
             while len(group) < group_count:

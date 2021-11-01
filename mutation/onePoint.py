@@ -12,4 +12,4 @@ class OnePointStrategy(MutationStrategy):
     def mutate(chromosome: BinCromosome):
         mutation_point = randrange(0, chromosome.length, 1)
 
-        chromosome[mutation_point] = not chromosome[mutation_point]
+        chromosome.value[mutation_point] = not chromosome.value[mutation_point]
