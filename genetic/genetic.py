@@ -70,7 +70,7 @@ class Genetic:
                 'population_len': self._population_size,
                 'k': kwargs.get('k'),
                 'percentage': kwargs.get('percentage'),
-                'elite_index': self.best_fit_index
+                # 'elite_index': self.best_fit_index
             }
             indexes = self.selection_strategy.select(**selection_params)
             crossover, mutation = self._calculate_probabilities(indexes)
