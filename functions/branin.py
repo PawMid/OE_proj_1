@@ -11,17 +11,17 @@ class Branin(Function):
     _s: float
     _t: float
 
-    def __init__(self, space: List = None, a: float = 1., b: float = (5.1 / (4 * pi ** 2)), c: float = 5 / pi,
-                 r: float = 6., s: float = 10., t: float = 1 / (8 * pi)) -> None:
+    def __init__(self, space: List = None, a: float = None, b: float = None, c: float = None,
+                 r: float = None, s: float = None, t: float = None) -> None:
         if space is None:
             space = [[-5, 10], [0, 15]]
         super().__init__(2, space)
-        self._a = a
-        self._b = b
-        self._c = c
-        self._r = r
-        self._s = s
-        self._t = t
+        self._a = 1. if not a else a
+        self._b = (5.1 / (4 * (pi ** 2))) if not b else b
+        self._c = 5/pi if not c else c
+        self._r = 6. if not r else r
+        self._s = 10. if not s else s
+        self._t = 1/(8*pi) if not t else t
 
     def calculate(self, *args) -> float:
         if len(args) != self.dims:
