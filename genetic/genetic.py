@@ -7,6 +7,7 @@ from mutation import MutationStrategy
 from random import randrange, random
 from copy import deepcopy
 import matplotlib.pyplot as plt
+import time
 
 
 class Genetic:
@@ -25,7 +26,8 @@ class Genetic:
             crossover_prob: float = 0.9,
             mutation_prob: float = 0.1,
             population_size: int = 100,
-            binary=True
+            binary=True,
+            max_repetition=10
     ) -> None:
         self.function = function(space=space)
         self.space = self.function.space
@@ -50,27 +52,36 @@ class Genetic:
             cnt += 1
         self.best_fit = None
         self.best_fit_index = None
-        print(self.mutation_prob)
+        self.epoch = 0
+        self.solutions_in_epochs = []
+        self.max_repetition = max_repetition
+        self.computation_time = None
 
-    def algorithm(self, epochs: int, minimum=True, **kwargs):
-        epoch = 0
-        while epochs > epoch:
-            print('epoch', epoch)
+    def algorithm(self, epochs: int, minimum=True, elites_quan=1, **kwargs):
+        self.epoch = 0
+        repeated = 0
+        t_begin = time.time()
+        while self._evaluate(epochs, repeated):
+            print('epoch', self.epoch)
             fitness = self._get_fitness()
+            fitness_sorted = deepcopy(fitness)
+            fitness_sorted.sort(reverse=not minimum)
             print('fitness', fitness)
-            if minimum:
-                self.best_fit = min(fitness)
-                self.best_fit_index = fitness.index(self.best_fit)
+            best_fit = fitness_sorted[0]
+            if best_fit == self.best_fit:
+                repeated += 1
             else:
-                self.best_fit = max(fitness)
-                self.best_fit_index = fitness.index(self.best_fit)
+                self.best_fit = best_fit
+            self.best_fit_index = fitness.index(self.best_fit)
+            self.solutions_in_epochs.append(self.best_fit)
+            elites = self._get_elites_indexes(fitness_sorted, fitness, elites_quan)
 
             selection_params = {
                 'calculated_values': fitness,
                 'population_len': self._population_size,
                 'k': kwargs.get('k'),
                 'percentage': kwargs.get('percentage'),
-                # 'elite_index': self.best_fit_index
+                'elite_indexes': elites
             }
             indexes = self.selection_strategy.select(**selection_params)
             crossover, mutation = self._calculate_probabilities(indexes)
@@ -86,8 +97,19 @@ class Genetic:
                 for j in range(len(indexes)):
                     if mutation[i][j]:
                         self.mutation_strategy.mutate(self._populations[i].get_chromosome(indexes[j]))
-            epoch += 1
+            self.epoch += 1
             print('best', self.best_fit)
+        self.computation_time = time.time() - t_begin
+
+    def _evaluate(self, epochs, repetition) -> bool:
+        return self.epoch < epochs or repetition < self.max_repetition
+
+    def _get_elites_indexes(self, sorted_fit: List, original_fit: List, n: int):
+        cut = sorted_fit[:n]
+        indexes = []
+        for result in cut:
+            indexes.append(original_fit.index(result))
+        return indexes
 
     def _get_fitness(self):
         fit = []
@@ -165,4 +187,3 @@ class Genetic:
         print(x, y, self.best_fit, self.function.calculate(x, y))
         ax.scatter(x, y, self.best_fit, c='r')
         plt.show()
-

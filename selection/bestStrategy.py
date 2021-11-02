@@ -17,12 +17,12 @@ class BestStrategy(SelectionStrategy):
 
         vals = kwargs.get('calculated_values')
         percent = kwargs.get('percentage')
-        elite_index = kwargs.get('elite_index')
+        elite_indexes = kwargs.get('elite_indexes')
 
         toSelect = int(len(vals) * percent)
         isSelected = [False] * len(vals)
-        if elite_index:
-            isSelected[elite_index] = True
+        for index in elite_indexes:
+            isSelected[index] = True
         selected = []
         for k in range(toSelect):
             minVal = inf

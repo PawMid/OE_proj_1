@@ -20,11 +20,11 @@ class TournamentStrategy(SelectionStrategy):
         return selected
 
     @staticmethod
-    def __make_groups(group_count: int, group_amount: int, population_len: int, elite_index: int) -> List[List]:
+    def __make_groups(group_count: int, group_amount: int, population_len: int, elite_indexes: List) -> List[List]:
         groups = []
         selected = [False] * population_len
-        if elite_index:
-            selected[elite_index] = True
+        for index in elite_indexes:
+            selected[index] = True
         while len(groups) < group_amount:
             group = []
             while len(group) < group_count:

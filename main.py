@@ -9,7 +9,7 @@ binary = True
 
 def main():
     gen = Genetic(Branin, BestStrategy, UniformCrossover, ThreePointStrategy, population_size=1000, chromosome_size=50)
-    gen.algorithm(1000, percentage=0.5, k=100)
+    gen.algorithm(100, percentage=0.5, k=100)
 
     gen.plot_solution()
 
