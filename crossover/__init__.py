@@ -9,5 +9,25 @@ __all__ = [
     'OnePointCrossover',
     'TwoPointCrossover',
     'ThreePointCrossover',
-    'UniformCrossover'
+    'UniformCrossover',
+    'get_strategy',
+    'binary'
 ]
+
+binary = [
+    'One point',
+    'Two point',
+    'Three point',
+    'Uniform'
+]
+
+__strategies = {
+    'One point': OnePointCrossover,
+    'Two point': TwoPointCrossover,
+    'Three point': ThreePointCrossover,
+    'Uniform': UniformCrossover,
+}
+
+
+def get_strategy(name: str):
+    return __strategies[name]

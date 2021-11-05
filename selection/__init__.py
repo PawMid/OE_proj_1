@@ -7,7 +7,9 @@ __all__ = [
     'BestStrategy',
     'RouletteStrategy',
     'TournamentStrategy',
-    'SelectionStrategy'
+    'SelectionStrategy',
+    'get_strategy',
+    'binary'
 ]
 
 binary = [

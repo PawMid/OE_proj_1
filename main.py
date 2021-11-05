@@ -1,8 +1,8 @@
 from genetic import Genetic
 from functions import Ackley, Branin
-from selection import get_strategy, binary as binarySelections, SelectionStrategy
-from mutation import OnePointStrategy, ThreePointStrategy
-from crossover import UniformCrossover, TwoPointCrossover, OnePointCrossover, ThreePointCrossover
+from selection import get_strategy as get_selection, binary as binarySelections, SelectionStrategy
+from mutation import get_strategy as get_mutation, binary as binaryMutations, MutationStrategy
+from crossover import get_strategy as get_crossover, binary as binaryCrossovers, CrossoverStrategy
 
 import sys
 from typing import Dict
@@ -25,6 +25,8 @@ height = 400
 
 selectionStrategy: SelectionStrategy
 selectionParams: Dict = {}
+
+crossoverStrategy: CrossoverStrategy
 
 
 def main():
@@ -49,21 +51,35 @@ def main():
     w, chromosome_size = get_input_with_label('Chromosome size', int, width=70)
     mainLayout.addWidget(w, 1, 0)
 
-    selectionWidget = get_selection_strategy_widget()
-
-    mainLayout.addWidget(selectionWidget, 2, 0)
+    mainLayout.addWidget(get_selection_strategy_widget(), 2, 0)
+    mainLayout.addWidget(get_crossover_strategy_widget(), 3, 0)
 
     mainWidget.resize(width, height)
     mainWidget.show()
     sys.exit(app.exec())
 
 
+def get_crossover_strategy_widget():
+    global crossoverStrategy
+    crossoverWidget = QWidget()
+    combo = QComboBox()
+    if binary:
+        combo.addItems(binarySelections)
+    else:
+        raise NotImplemented
+
+    return crossoverWidget
+
+
 def get_selection_strategy_widget():
     global selectionStrategy
     global selectionParams
     selectionStrategyCombo = QComboBox()
-    selectionStrategyCombo.addItems(binarySelections)
-    selectionStrategy = get_strategy(binarySelections[0])
+    if binary:
+        selectionStrategyCombo.addItems(binarySelections)
+    else:
+        raise NotImplemented
+    selectionStrategy = get_selection(binarySelections[0])
 
     def change_selection_params():
         params = selectionStrategy.get_params_list()
@@ -75,7 +91,7 @@ def get_selection_strategy_widget():
 
     def onchange():
         global selectionStrategy
-        selectionStrategy = get_strategy(selectionStrategyCombo.currentText())
+        selectionStrategy = get_selection(selectionStrategyCombo.currentText())
         change_selection_params()
         print(selectionStrategy, selectionParams)
 
@@ -92,6 +108,10 @@ def get_selection_strategy_widget():
     selectionLayout.addWidget(paramsWidget, 2, 0)
     change_selection_params()
     return selectionWidget
+
+
+def get_button_with_side_effect(label: str, effect):
+    pass
 
 
 def get_input_with_label(label, input_type: type = None, **kwargs):
