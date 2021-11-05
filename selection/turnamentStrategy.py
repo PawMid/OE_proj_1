@@ -36,5 +36,6 @@ class TournamentStrategy(SelectionStrategy):
             groups.append(group)
         return groups
 
-    def get_params_list(self):
-        return ['k']
+    @staticmethod
+    def get_params_list():
+        return {'k': int}

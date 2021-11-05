@@ -8,5 +8,6 @@ class SelectionStrategy(ABC):
     def select(**kwargs) -> List[int]:
         pass
 
-    def get_params_list(self):
+    @staticmethod
+    def get_params_list():
         pass

@@ -9,5 +9,25 @@ __all__ = [
     'EdgeStrategy',
     'OnePointStrategy',
     'TwoPointStrategy',
-    'ThreePointStrategy'
+    'ThreePointStrategy',
+    'get_strategy',
+    'binary'
 ]
+
+binary = [
+    'One point',
+    'Two point',
+    'Three point',
+    'Edge'
+]
+
+__strategies = {
+    'One point': OnePointStrategy,
+    'Two point': TwoPointStrategy,
+    'Three point': ThreePointStrategy,
+    'Edge': EdgeStrategy,
+}
+
+
+def get_strategy(name: str):
+    return __strategies[name]
