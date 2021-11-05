@@ -27,7 +27,7 @@ class Genetic:
             mutation_prob: float = 0.1,
             population_size: int = 100,
             binary=True,
-            max_repetition=10
+            max_repetition=100
     ) -> None:
         self.function = function(space=space)
         self.space = self.function.space
@@ -56,6 +56,7 @@ class Genetic:
         self.solutions_in_epochs = []
         self.max_repetition = max_repetition
         self.computation_time = None
+        self.filename = 'solution_in_epochs.csv'
 
     def algorithm(self, epochs: int, minimum=True, elites_quan=1, **kwargs):
         self.epoch = 0
@@ -75,7 +76,6 @@ class Genetic:
             self.best_fit_index = fitness.index(self.best_fit)
             self.solutions_in_epochs.append(self.best_fit)
             elites = self._get_elites_indexes(fitness_sorted, fitness, elites_quan)
-
             selection_params = {
                 'calculated_values': fitness,
                 'population_len': self._population_size,
@@ -100,9 +100,27 @@ class Genetic:
             self.epoch += 1
             print('best', self.best_fit)
         self.computation_time = time.time() - t_begin
+        self._write_to_file()
+
+    def get_calculation_time(self):
+        return self.computation_time
+
+    def get_solution_history(self):
+        return self.solutions_in_epochs
+
+    def plot_solution(self, path: str = None):
+        ax = self.function.plot(get_axis=True)
+        x = self._populations[0].get_chromosome(self.best_fit_index).get_value(solution_space=self.space[0])
+        y = self._populations[1].get_chromosome(self.best_fit_index).get_value(solution_space=self.space[1])
+        print(x, y, self.best_fit, self.function.calculate(x, y))
+        ax.scatter(x, y, self.best_fit, c='r')
+        if not path:
+            plt.show()
+        else:
+            plt.savefig('solution_in_function.png')
 
     def _evaluate(self, epochs, repetition) -> bool:
-        return self.epoch < epochs or repetition < self.max_repetition
+        return self.epoch < epochs and repetition < self.max_repetition
 
     def _get_elites_indexes(self, sorted_fit: List, original_fit: List, n: int):
         cut = sorted_fit[:n]
@@ -142,6 +160,13 @@ class Genetic:
             mutation.append(mutation_dim)
         return crossover, mutation
 
+    def _write_to_file(self):
+        with open(self.filename, 'w+') as file:
+            lines = ['epoch, fitness\n']
+            for i in range(len(self.solutions_in_epochs)):
+                lines.append(f'{i+1}, {self.solutions_in_epochs[i]}\n')
+            file.writelines(lines)
+
     def _pair(self, indexes, crossover):
         paired = []
         pairs = []
@@ -179,11 +204,3 @@ class Genetic:
                 pairs_in_dim.append(pair)
             pairs.append(pairs_in_dim)
         return pairs
-
-    def plot_solution(self):
-        ax = self.function.plot(get_axis=True)
-        x = self._populations[0].get_chromosome(self.best_fit_index).get_value(solution_space=self.space[0])
-        y = self._populations[1].get_chromosome(self.best_fit_index).get_value(solution_space=self.space[1])
-        print(x, y, self.best_fit, self.function.calculate(x, y))
-        ax.scatter(x, y, self.best_fit, c='r')
-        plt.show()

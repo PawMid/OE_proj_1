@@ -101,6 +101,7 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+solution_in_epochs.csv
 # Environments
 .env
 .venv
@@ -129,3 +130,6 @@ dmypy.json
 .pyre/
 
 .idea/
+
+# misc
+*.pdf
