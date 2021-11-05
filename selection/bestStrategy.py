@@ -17,6 +17,8 @@ class BestStrategy(SelectionStrategy):
 
         vals = kwargs.get('calculated_values')
         percent = kwargs.get('percentage')
+        if not isinstance(percent, float):
+            raise ValueError('Percentage must be between (0, 1).')
         elite_indexes = kwargs.get('elite_indexes')
 
         toSelect = int(len(vals) * percent)
