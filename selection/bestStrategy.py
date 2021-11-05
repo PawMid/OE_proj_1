@@ -36,6 +36,6 @@ class BestStrategy(SelectionStrategy):
 
         return selected
 
-    def get_params_list(self):
-        return ['percentage']
-
+    @staticmethod
+    def get_params_list():
+        return {'percentage': float}
