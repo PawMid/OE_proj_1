@@ -37,12 +37,6 @@ mutationProbability: QLineEdit
 
 
 def main():
-    # gen = Genetic(Branin, BestStrategy, UniformCrossover, ThreePointStrategy, population_size=1000, chromosome_size=50)
-    #
-    # gen.algorithm(epochs=100, n=10)
-    #
-    # gen.plot_solution()
-
     global population_size
     global chromosome_size
 
@@ -98,7 +92,6 @@ def get_mutation_strategy_widget():
     )
     layout.addWidget(w, 1, 0, 1, 2)
     return widget
-
 
 
 def get_crossover_strategy_widget():
