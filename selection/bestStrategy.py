@@ -40,4 +40,4 @@ class BestStrategy(SelectionStrategy):
 
     @staticmethod
     def get_params_list():
-        return {'percentage': float}
+        return {'percentage': [float, '0,02']}

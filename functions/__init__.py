@@ -7,3 +7,17 @@ __all__ = [
     'Ackley',
     'Branin'
 ]
+
+functions = [
+    'Ackley',
+    'Branin',
+]
+
+__functions = {
+    'Ackley': Ackley,
+    'Branin': Branin,
+}
+
+
+def functionFactory(name: str):
+    return __functions[name]

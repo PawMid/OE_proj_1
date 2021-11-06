@@ -4,33 +4,36 @@ import numpy as np
 
 
 def plot_solution_in_epochs(solutions: List, path: str = None):
-    plt.plot(range(len(solutions)), solutions)
-    plt.title('Solution in epochs')
+    fig = plt.figure()
+    axis = fig.gca()
+    axis.plot(range(len(solutions)), solutions)
     if path:
         plt.savefig(path)
     else:
-        plt.show()
+        return fig
 
 
 def plot_mean_in_epochs(solutions: List, path: str = None):
     means = []
     for i in range(len(solutions)):
         means.append(np.mean(solutions[:i]))
-    plt.plot(range(len(means)), means)
-    plt.title('Mean in epochs')
+    fig = plt.figure()
+    axis = fig.gca()
+    axis.plot(range(len(means)), means)
     if path:
         plt.savefig(path)
     else:
-        plt.show()
+        return fig
 
 
 def plot_std_in_epochs(solutions: List, path: str = None):
     deviations = []
     for i in range(len(solutions)):
         deviations.append(np.std(solutions[:i]))
-    plt.plot(range(len(deviations)), deviations)
-    plt.title('Standard deviation in epochs')
+    fig = plt.figure()
+    axis = fig.gca()
+    axis.plot(range(len(deviations)), deviations)
     if path:
         plt.savefig(path)
     else:
-        plt.show()
+        return fig

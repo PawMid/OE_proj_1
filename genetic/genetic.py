@@ -67,7 +67,7 @@ class Genetic:
             fitness = self._get_fitness()
             fitness_sorted = deepcopy(fitness)
             fitness_sorted.sort(reverse=not minimum)
-            print('fitness', fitness)
+            # print('fitness', fitness)
             best_fit = fitness_sorted[0]
             if best_fit == self.best_fit:
                 repeated += 1
@@ -85,9 +85,9 @@ class Genetic:
             }
             indexes = self.selection_strategy.select(**selection_params)
             crossover, mutation = self._calculate_probabilities(indexes)
-            print('selected indexes', indexes)
+            # print('selected indexes', indexes)
             paired = self._pair(indexes, crossover)
-            print('paired indexes', paired)
+            # print('paired indexes', paired)
             for i in range(self._dims):
                 for pair in paired[i]:
                     self.crossover_strategy.cross(
@@ -98,7 +98,7 @@ class Genetic:
                     if mutation[i][j]:
                         self.mutation_strategy.mutate(self._populations[i].get_chromosome(indexes[j]))
             self.epoch += 1
-            print('best', self.best_fit)
+            # print('best', self.best_fit)
         self.computation_time = time.time() - t_begin
         self._write_to_file()
 
@@ -112,15 +112,15 @@ class Genetic:
         ax = self.function.plot(get_axis=True)
         x = self._populations[0].get_chromosome(self.best_fit_index).get_value(solution_space=self.space[0])
         y = self._populations[1].get_chromosome(self.best_fit_index).get_value(solution_space=self.space[1])
-        print(x, y, self.best_fit, self.function.calculate(x, y))
-        ax.scatter(x, y, self.best_fit, c='r')
+        axes = ax.axes
+        axes[0].scatter(x, y, self.best_fit, c='r')
         if not path:
-            plt.show()
+            return ax
         else:
             plt.savefig('solution_in_function.png')
 
     def _evaluate(self, epochs, repetition) -> bool:
-        return self.epoch < epochs and repetition < self.max_repetition
+        return self.epoch < epochs
 
     def _get_elites_indexes(self, sorted_fit: List, original_fit: List, n: int):
         cut = sorted_fit[:n]
