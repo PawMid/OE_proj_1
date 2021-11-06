@@ -155,7 +155,7 @@ def get_function_widget():
     plot = function().plot(get_axis=True)
     plot.tight_layout()
     plot.set_figwidth(3)
-    plot.set_dpi(100)
+    # plot.set_dpi(100)
     canvas = FigureCanvasQTAgg(plot)
     canvas.resize(100, 100)
 
@@ -170,7 +170,7 @@ def get_function_widget():
         plot = function().plot(get_axis=True)
         plot.tight_layout()
         plot.set_figwidth(3)
-        plot.set_dpi(100)
+        # plot.set_dpi(100)
         canvas = FigureCanvasQTAgg(plot)
         clearLayout(canvas_layout)
         canvas_layout.addWidget(canvas)

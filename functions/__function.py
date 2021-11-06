@@ -16,7 +16,7 @@ class Function(ABC):
     def calculate(self, *args) -> float:
         pass
 
-    def plot(self, x_space: List[float]=None, y_space: List[float]=None, step: float = 0.5, get_axis: bool = False, wh = (10, 10)):
+    def plot(self, x_space: List[float]=None, y_space: List[float]=None, step: float = 0.1, get_axis: bool = False, wh = (10, 10)):
         print(self.space)
         if x_space:
             xaxis = np.arange(x_space[0], x_space[1], step)
