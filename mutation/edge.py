@@ -9,7 +9,7 @@ class EdgeStrategy(MutationStrategy):
         super().__init__(True)
 
     @staticmethod
-    def mutate(chromosome: BinCromosome):
+    def mutate(chromosome: BinCromosome, **kwargs):
         left = getrandbits(1)
         if left:
             chromosome.value[chromosome.length - 1] = not chromosome.value[chromosome.length - 1]

@@ -96,7 +96,7 @@ class Genetic:
                     )
                 for j in range(len(indexes)):
                     if mutation[i][j]:
-                        self.mutation_strategy.mutate(self._populations[i].get_chromosome(indexes[j]))
+                        self.mutation_strategy.mutate(self._populations[i].get_chromosome(indexes[j]), min=self.space[i][0], max=self.space[i][1])
             self.epoch += 1
             # print('best', self.best_fit)
         self.computation_time = time.time() - t_begin

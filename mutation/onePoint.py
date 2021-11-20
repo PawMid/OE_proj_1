@@ -9,7 +9,7 @@ class OnePointStrategy(MutationStrategy):
         super().__init__(True)
 
     @staticmethod
-    def mutate(chromosome: BinCromosome):
+    def mutate(chromosome: BinCromosome, **kwargs):
         mutation_point = randrange(0, chromosome.length, 1)
 
         chromosome.value[mutation_point] = not chromosome.value[mutation_point]

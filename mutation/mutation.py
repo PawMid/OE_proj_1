@@ -8,5 +8,5 @@ class MutationStrategy(ABC):
         self.binary = binary
 
     @staticmethod
-    def mutate(chromosome: Chromosome):
+    def mutate(chromosome: Chromosome, **kwargs):
         pass

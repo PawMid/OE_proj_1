@@ -3,6 +3,8 @@ from .mutation import MutationStrategy
 from .onePoint import OnePointStrategy
 from .twoPoint import TwoPointStrategy
 from .threePoint import ThreePointStrategy
+from .gaussian import GaussianStrategy
+from .even import EvenStrategy
 
 __all__ = [
     'MutationStrategy',
@@ -11,7 +13,10 @@ __all__ = [
     'TwoPointStrategy',
     'ThreePointStrategy',
     'get_strategy',
-    'binary'
+    'binary',
+    'real',
+    'GaussianStrategy',
+    'EvenStrategy'
 ]
 
 binary = [
@@ -21,11 +26,18 @@ binary = [
     'Edge'
 ]
 
+real = [
+    'Gaussian',
+    'Even'
+]
+
 __strategies = {
     'One point': OnePointStrategy,
     'Two point': TwoPointStrategy,
     'Three point': ThreePointStrategy,
     'Edge': EdgeStrategy,
+    'Gaussian': GaussianStrategy,
+    'Even': EvenStrategy
 }
 
 

@@ -3,6 +3,8 @@ from crossover.onePoint import OnePointCrossover
 from crossover.twoPoint import TwoPointCrossover
 from crossover.threePoint import ThreePointCrossover
 from crossover.uniform import UniformCrossover
+from crossover.Arthmetic import ArithmeticCrossover
+from crossover.heuristic import HeuristicCrossover
 
 __all__ = [
     'CrossoverStrategy',
@@ -11,7 +13,10 @@ __all__ = [
     'ThreePointCrossover',
     'UniformCrossover',
     'get_strategy',
-    'binary'
+    'binary',
+    'real',
+    'ArithmeticCrossover',
+    'HeuristicCrossover'
 ]
 
 binary = [
@@ -21,11 +26,18 @@ binary = [
     'Uniform'
 ]
 
+real = [
+    'Arithmetic',
+    'Heuristic'
+]
+
 __strategies = {
     'One point': OnePointCrossover,
     'Two point': TwoPointCrossover,
     'Three point': ThreePointCrossover,
     'Uniform': UniformCrossover,
+    'Arithmetic': ArithmeticCrossover,
+    'Heuristic': HeuristicCrossover
 }
 
 

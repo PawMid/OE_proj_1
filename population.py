@@ -4,7 +4,7 @@ from typing import (
 )
 import argparse
 
-from chromosome import Chromosome, BinCromosome
+from chromosome import *
 
 class Popultaion():
 
@@ -23,6 +23,8 @@ class Popultaion():
         @param crossover_prob: probability of crossover for single chromosome
         @param mutation_prob: probability of mutation for single chromosome
         @param kwargs.size - size of binary chromosome required for binary representation
+        @param kwargs.min - min val of real chromosome
+        @param kwargs.max - max val of real chromosome
 
         '''
         cnt = 0
@@ -33,7 +35,8 @@ class Popultaion():
                     raise argparse.ArgumentError(message="No size argument passed add 'size=<int>' to call args.")
                 return BinCromosome(kwargs.get('size'), crossover_prob, mutation_prob)
         else:
-            raise NotImplemented
+            def factory() -> RealChromosome:
+                return RealChromosome(self.solution_space[0], self.solution_space[1], crossover_prob, mutation_prob)
 
         while cnt < self.population_size:
             self.individuals.append(factory())
@@ -62,4 +65,5 @@ class Popultaion():
                 for chrom in self.individuals:
                     print(chrom.value)   
         else:
-            pass
+            for chrom in self.individuals:
+                print(chrom.value)

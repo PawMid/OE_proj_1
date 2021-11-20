@@ -9,7 +9,7 @@ class TwoPointStrategy(MutationStrategy):
         super().__init__(True)
 
     @staticmethod
-    def mutate(chromosome: BinCromosome):
+    def mutate(chromosome: BinCromosome, **kwargs):
         points = []
         for i in range(2):
             mutation_point = randrange(0, chromosome.length, 1)

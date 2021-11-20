@@ -2,8 +2,8 @@ from genetic import Genetic
 from utils.plot import *
 from functions import functions, functionFactory, Function
 from selection import get_strategy as get_selection, binary as binarySelections, SelectionStrategy
-from mutation import get_strategy as get_mutation, binary as binaryMutations, MutationStrategy
-from crossover import get_strategy as get_crossover, binary as binaryCrossovers, CrossoverStrategy
+from mutation import get_strategy as get_mutation, binary as binaryMutations, MutationStrategy, real as realMutation
+from crossover import get_strategy as get_crossover, binary as binaryCrossovers, CrossoverStrategy, real as realCrossover
 
 import sys
 from typing import Dict
@@ -23,7 +23,7 @@ from PyQt5.QtCore import Qt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 import matplotlib.pyplot as plt
 
-binary = True
+binary = False
 
 width = 500
 height = 400
@@ -82,8 +82,8 @@ def main():
 
     w, population_size = get_input_with_label('Population size', int, width=50, default='1000')
     col1.append(w)
-    w, chromosome_size = get_input_with_label('Chromosome size', int, width=50, default='10')
-    col1.append(w)
+    # w, chromosome_size = get_input_with_label('Chromosome size', int, width=50, default='10')
+    # col1.append(w)
     w, epochs = get_input_with_label('Epochs', int, width=50, default='100')
     col1.append(w)
     w, elite_count = get_input_with_label('Elites', int, width=50, default='1')
@@ -196,7 +196,8 @@ def get_mutation_strategy_widget():
         combo.addItems(binaryMutations)
         mutationStrategy = get_mutation(binaryMutations[0])
     else:
-        raise NotImplemented
+        combo.addItems(realMutation)
+        mutationStrategy = get_mutation(realMutation[0])
 
     def onchange():
         global mutationStrategy
@@ -229,7 +230,8 @@ def get_crossover_strategy_widget():
         combo.addItems(binaryCrossovers)
         crossoverStrategy = get_crossover(binaryCrossovers[0])
     else:
-        raise NotImplemented
+        combo.addItems(realCrossover)
+        crossoverStrategy = get_crossover(realCrossover[0])
 
     def onchange():
         global crossoverStrategy
@@ -257,11 +259,9 @@ def get_selection_strategy_widget():
     global selectionStrategy
     global selectionParams
     selectionStrategyCombo = QComboBox()
-    if binary:
-        selectionStrategyCombo.addItems(binarySelections)
-        selectionStrategy = get_selection(binarySelections[0])
-    else:
-        raise NotImplemented
+
+    selectionStrategyCombo.addItems(binarySelections)
+    selectionStrategy = get_selection(binarySelections[0])
 
     def change_selection_params():
         params = selectionStrategy.get_params_list()
@@ -369,14 +369,13 @@ def run_algorithm():
 
     if \
             population_size.text() \
-                    and chromosome_size.text() \
                     and selectionParams \
                     and crossoverProbability.text() \
                     and mutationProbability.text() \
                     and epochs.text() \
                     and elite_count.text():
         pop = int(population_size.text())
-        chr = int(chromosome_size.text())
+        chr = 0
         sp = {}
         for key, val in selectionParams.items():
             try:
